@@ -29,12 +29,14 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Create necessary directories and set proper permissions
-RUN mkdir -p /var/run/nginx && \
+RUN mkdir -p /var/run/nginx /var/log/nginx && \
     chown -R nginx:nginx /usr/share/nginx/html && \
     chown -R nginx:nginx /var/cache/nginx && \
     chown -R nginx:nginx /var/log/nginx && \
     chown -R nginx:nginx /etc/nginx/conf.d && \
-    chown -R nginx:nginx /var/run/nginx
+    chown -R nginx:nginx /var/run/nginx && \
+    # Ensure nginx can write to these directories
+    chmod 755 /var/run/nginx /var/log/nginx
 
 # Switch to non-root user (nginx user already exists in the base image)
 USER nginx

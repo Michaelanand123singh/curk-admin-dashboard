@@ -1,6 +1,14 @@
 # Multi-stage build for Admin Dashboard - Optimized for GCP Cloud Run
 FROM node:18-alpine as builder
 
+# Accept build arguments for environment variables
+ARG VITE_API_BASE_URL
+ARG VITE_USE_API_KEY
+
+# Set environment variables for the build process
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+ENV VITE_USE_API_KEY=$VITE_USE_API_KEY
+
 # Set working directory
 WORKDIR /app
 

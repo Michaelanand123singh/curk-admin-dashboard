@@ -1,11 +1,13 @@
 # Cloud Build configuration for Admin Dashboard
 steps:
-  # Build the Docker image
+  # Build the Docker image with build-time environment variables
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
       '-t', 'gcr.io/$PROJECT_ID/admin-dashboard:$COMMIT_SHA',
       '-t', 'gcr.io/$PROJECT_ID/admin-dashboard:latest',
+      '--build-arg', 'VITE_API_BASE_URL=https://api.curk.in/api/v1',
+      '--build-arg', 'VITE_USE_API_KEY=false',
       '.'
     ]
     dir: 'admin-dashboard'

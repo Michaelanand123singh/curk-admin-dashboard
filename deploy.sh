@@ -21,9 +21,12 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-# Build the Docker image
+# Build the Docker image with build arguments
 echo "📦 Building Docker image..."
-docker build -t $IMAGE_NAME:latest .
+docker build \
+    --build-arg VITE_API_BASE_URL=https://api.curk.in/api/v1 \
+    --build-arg VITE_USE_API_KEY=false \
+    -t $IMAGE_NAME:latest .
 
 # Check if build was successful
 if [ $? -eq 0 ]; then

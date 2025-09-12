@@ -22,27 +22,21 @@ FROM nginx:1.25-alpine
 # Install dumb-init for proper signal handling in Cloud Run
 RUN apk add --no-cache dumb-init
 
-# Create nginx user and set permissions
-RUN addgroup -g 1001 -S nginx && \
-    adduser -S -D -H -u 1001 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx
-
 # Copy built files from builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Set proper permissions
-RUN chown -R nginx:nginx /usr/share/nginx/html && \
+# Create necessary directories and set proper permissions
+RUN mkdir -p /var/run/nginx && \
+    chown -R nginx:nginx /usr/share/nginx/html && \
     chown -R nginx:nginx /var/cache/nginx && \
     chown -R nginx:nginx /var/log/nginx && \
-    chown -R nginx:nginx /etc/nginx/conf.d
-
-# Create nginx pid directory
-RUN mkdir -p /var/run/nginx && \
+    chown -R nginx:nginx /etc/nginx/conf.d && \
     chown -R nginx:nginx /var/run/nginx
 
-# Switch to non-root user
+# Switch to non-root user (nginx user already exists in the base image)
 USER nginx
 
 # Expose port 8080 (Cloud Run default)

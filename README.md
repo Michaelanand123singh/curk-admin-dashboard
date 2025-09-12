@@ -106,6 +106,32 @@ docker build -t admin-dashboard .
 docker run -p 8080:8080 admin-dashboard
 ```
 
+## 🔧 Troubleshooting
+
+### Environment Variable Issues
+
+If you're getting "VITE_API_BASE_URL environment variable is not set" errors:
+
+1. **Check the browser console** for debug information about environment variables
+2. **Verify the build process** includes environment variables:
+   ```bash
+   # Test environment variables locally
+   npm run test-env
+   
+   # Build with environment variables
+   VITE_API_BASE_URL=https://api.curk.in/api/v1 npm run build
+   ```
+
+3. **The application now has fallback logic** - it will automatically use `https://api.curk.in/api/v1` for production environments (admin.curk.in or *.run.app domains)
+
+4. **Check Docker build logs** to ensure environment variables are being passed correctly
+
+### Common Issues
+
+- **CORS errors**: Ensure your backend allows the admin dashboard domain
+- **Authentication failures**: Check if you're using the correct authentication method (JWT vs API Key)
+- **Build failures**: Verify all environment variables are set during the Docker build process
+
 ## Configuration
 
 ### API Configuration

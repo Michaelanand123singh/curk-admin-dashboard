@@ -21,6 +21,12 @@ RUN npm ci --frozen-lockfile
 # Copy source code
 COPY . .
 
+# Ensure .env file exists with production values
+RUN echo "VITE_API_BASE_URL=https://api.curk.in/api/v1" > .env && \
+    echo "VITE_USE_API_KEY=false" >> .env && \
+    echo "VITE_API_KEY=" >> .env && \
+    echo "NODE_ENV=production" >> .env
+
 # Build the application for production
 RUN npm run build
 

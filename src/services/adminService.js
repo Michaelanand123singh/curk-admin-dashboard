@@ -1,10 +1,26 @@
 // Admin Dashboard API Service
 const getApiBaseUrl = () => {
+  // Debug: Log all environment variables
+  console.log('Environment variables:', {
+    VITE_API_BASE_URL: import.meta.env.VITE_API_BASE_URL,
+    VITE_USE_API_KEY: import.meta.env.VITE_USE_API_KEY,
+    VITE_API_KEY: import.meta.env.VITE_API_KEY,
+    MODE: import.meta.env.MODE,
+    DEV: import.meta.env.DEV,
+    PROD: import.meta.env.PROD,
+    hostname: window.location.hostname
+  });
+  
   // Use environment variable for API base URL
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   
   if (!apiBaseUrl) {
     console.warn('VITE_API_BASE_URL environment variable is not set. Please configure it in your .env file.');
+    // Fallback to production API URL for deployed environments
+    if (window.location.hostname === 'admin.curk.in' || window.location.hostname.includes('run.app')) {
+      console.log('Using fallback production API URL');
+      return 'https://api.curk.in/api/v1';
+    }
     return null;
   }
   
@@ -22,12 +38,18 @@ class AdminService {
     // Validate configuration
     if (!this.baseURL) {
       console.error('AdminService: API base URL is not configured. Please set VITE_API_BASE_URL environment variable.');
+      // Try to get the URL again with fallback
+      this.baseURL = getApiBaseUrl();
     }
   }
 
   async request(endpoint, options = {}) {
     if (!this.baseURL) {
-      throw new Error('API base URL is not configured. Please set VITE_API_BASE_URL environment variable.');
+      // Try to get the URL again with fallback
+      this.baseURL = getApiBaseUrl();
+      if (!this.baseURL) {
+        throw new Error('API base URL is not configured. Please set VITE_API_BASE_URL environment variable.');
+      }
     }
     
     const url = `${this.baseURL}${endpoint}`;

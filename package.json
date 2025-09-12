@@ -11,7 +11,8 @@
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "start": "vite preview --port 8080 --host 0.0.0.0",
-    "validate-env": "node validate-env.js"
+    "validate-env": "node validate-env.js",
+    "test-env": "node test-env.js"
   },
   "dependencies": {
     "lucide-react": "^0.544.0",

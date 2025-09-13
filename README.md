@@ -103,7 +103,7 @@ The application uses a multi-stage Docker build for optimal production deploymen
 docker build -t admin-dashboard .
 
 # Run locally
-docker run -p 8080:8080 admin-dashboard
+docker run -p 8000:8000 admin-dashboard
 ```
 
 ## 🔧 Troubleshooting

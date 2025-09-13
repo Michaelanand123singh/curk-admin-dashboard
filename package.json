@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
-    "start": "vite preview --port 8080 --host 0.0.0.0",
+    "start": "vite preview --port 8000 --host 0.0.0.0",
     "validate-env": "node validate-env.js",
     "test-env": "node test-env.js"
   },

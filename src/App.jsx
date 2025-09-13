@@ -6,6 +6,8 @@ import DashboardPage from './pages/DashboardPage';
 import UserManagementPage from './pages/UserManagementPage';
 import SystemAnalyticsPage from './pages/SystemAnalyticsPage';
 import SystemMonitoringPage from './pages/SystemMonitoringPage';
+import EmailMonitoringPage from './pages/EmailMonitoringPage';
+import MeetingSchedulingPage from './pages/MeetingSchedulingPage';
 import AuditLogsPage from './pages/AuditLogsPage';
 import BulkOperationsPage from './pages/BulkOperationsPage';
 import ErrorLogsPage from './pages/ErrorLogsPage';
@@ -77,6 +79,20 @@ function App() {
               <ProtectedRoute>
                 <Layout>
                   <SystemMonitoringPage />
+                </Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/email-monitoring" element={
+              <ProtectedRoute>
+                <Layout>
+                  <EmailMonitoringPage />
+                </Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/meeting-scheduling" element={
+              <ProtectedRoute>
+                <Layout>
+                  <MeetingSchedulingPage />
                 </Layout>
               </ProtectedRoute>
             } />

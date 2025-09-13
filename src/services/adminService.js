@@ -280,6 +280,99 @@ class AdminService {
     
     return false;
   }
+
+  // Email Monitoring Methods
+  async getEmailAccounts() {
+    return this.get('/email-accounts');
+  }
+
+  async addEmailAccount(accountData) {
+    return this.post('/email-accounts', accountData);
+  }
+
+  async updateEmailAccount(accountId, updateData) {
+    return this.put(`/email-accounts/${accountId}`, updateData);
+  }
+
+  async deleteEmailAccount(accountId) {
+    return this.delete(`/email-accounts/${accountId}`);
+  }
+
+  async getEmailStatistics() {
+    return this.get('/email-statistics');
+  }
+
+  async getEmailMessages(params = {}) {
+    const queryString = new URLSearchParams(params).toString();
+    return this.get(`/email-messages${queryString ? `?${queryString}` : ''}`);
+  }
+
+  async sendManualReply(messageId, replyContent) {
+    return this.post(`/email-messages/${messageId}/reply`, { reply_content: replyContent });
+  }
+
+  async escalateEmail(messageId, escalationReason) {
+    return this.post(`/email-messages/${messageId}/escalate`, { escalation_reason: escalationReason });
+  }
+
+  // Meeting Scheduling Methods
+  async getMeetings(params = {}) {
+    const queryString = new URLSearchParams(params).toString();
+    return this.get(`/meetings${queryString ? `?${queryString}` : ''}`);
+  }
+
+  async getMeetingStatistics() {
+    return this.get('/meeting/statistics');
+  }
+
+  async getAvailableSlots(durationMinutes = 30, daysAhead = 7) {
+    return this.get(`/meeting/available-slots?duration_minutes=${durationMinutes}&days_ahead=${daysAhead}`);
+  }
+
+  async saveCalendarConfig(configData) {
+    return this.post('/meeting/calendar-config', configData);
+  }
+
+  async getCalendarConfig() {
+    return this.get('/meeting/calendar-config');
+  }
+
+  async testMeetingConnection(configData) {
+    return this.post('/meeting/test-connection', configData);
+  }
+
+  async updateMeeting(meetingId, updateData) {
+    return this.put(`/meetings/${meetingId}`, updateData);
+  }
+
+  async cancelMeeting(meetingId) {
+    return this.delete(`/meetings/${meetingId}`);
+  }
+
+  // Calendar OAuth2 Methods
+  async initiateGoogleOAuth2() {
+    return this.get('/calendar/oauth2/google/initiate');
+  }
+
+  async initiateMicrosoftOAuth2() {
+    return this.get('/calendar/oauth2/microsoft/initiate');
+  }
+
+  async configureCalendly(configData) {
+    return this.post('/calendar/calendly/configure', configData);
+  }
+
+  async getCalendarStatus() {
+    return this.get('/calendar/status');
+  }
+
+  async testCalendarConnection() {
+    return this.post('/calendar/test-connection');
+  }
+
+  async disconnectCalendar() {
+    return this.delete('/calendar/disconnect');
+  }
 }
 
 export const adminService = new AdminService();

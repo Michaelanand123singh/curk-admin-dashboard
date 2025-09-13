@@ -46,7 +46,7 @@ if [ $? -eq 0 ]; then
             --region $REGION \
             --platform managed \
             --allow-unauthenticated \
-            --port 8080 \
+            --port 8000 \
             --memory 512Mi \
             --cpu 1 \
             --min-instances 0 \

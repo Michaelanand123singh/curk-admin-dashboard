@@ -7,7 +7,11 @@ import {
   TrendingUp,
   Clock,
   CheckCircle,
-  XCircle
+  XCircle,
+  Mail,
+  Calendar,
+  Send,
+  MessageSquare
 } from 'lucide-react';
 import { adminService } from '../services/adminService';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -46,6 +50,8 @@ const StatCard = ({ title, value, icon: Icon, color = 'primary', trend, subtitle
 export default function DashboardPage() {
   const [overview, setOverview] = useState(null);
   const [health, setHealth] = useState(null);
+  const [emailStats, setEmailStats] = useState(null);
+  const [meetingStats, setMeetingStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -56,12 +62,16 @@ export default function DashboardPage() {
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const [overviewData, healthData] = await Promise.all([
+      const [overviewData, healthData, emailStatsData, meetingStatsData] = await Promise.all([
         adminService.getSystemOverview(),
-        adminService.getSystemHealth()
+        adminService.getSystemHealth(),
+        adminService.getEmailStatistics().catch(() => ({ success: false, data: {} })),
+        adminService.getMeetingStatistics().catch(() => ({ success: false, data: {} }))
       ]);
       setOverview(overviewData);
       setHealth(healthData);
+      setEmailStats(emailStatsData.success ? emailStatsData.data : {});
+      setMeetingStats(meetingStatsData.success ? meetingStatsData.data : {});
     } catch (err) {
       setError(err.message);
     } finally {
@@ -129,6 +139,38 @@ export default function DashboardPage() {
           icon={health?.system?.status === 'healthy' ? CheckCircle : AlertTriangle}
           color={health?.system?.status === 'healthy' ? 'green' : 'yellow'}
           subtitle={`${health?.system?.recent_errors_24h || 0} errors today`}
+        />
+      </div>
+
+      {/* Email & Meeting Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StatCard
+          title="Email Accounts"
+          value={emailStats?.total_accounts || 0}
+          icon={Mail}
+          color="blue"
+          subtitle={`${emailStats?.active_accounts || 0} active`}
+        />
+        <StatCard
+          title="Emails Processed"
+          value={emailStats?.total_emails_processed || 0}
+          icon={Send}
+          color="green"
+          subtitle={`${emailStats?.total_replies_sent || 0} auto-replies`}
+        />
+        <StatCard
+          title="Meetings Scheduled"
+          value={meetingStats?.total_meetings_scheduled || 0}
+          icon={Calendar}
+          color="purple"
+          subtitle={`${meetingStats?.meetings_this_week || 0} this week`}
+        />
+        <StatCard
+          title="Conversion Rate"
+          value={meetingStats?.conversion_rate ? `${(meetingStats.conversion_rate * 100).toFixed(1)}%` : 'N/A'}
+          icon={MessageSquare}
+          color="yellow"
+          subtitle="Email to meeting"
         />
       </div>
 

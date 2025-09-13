@@ -55,8 +55,8 @@ RUN mkdir -p /var/run/nginx /var/log/nginx && \
 # Switch to non-root user (nginx user already exists in the base image)
 USER nginx
 
-# Expose port 8080 (Cloud Run default)
-EXPOSE 8080
+# Expose port 8000 (Cloud Run default)
+EXPOSE 8000
 
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]

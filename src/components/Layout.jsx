@@ -14,7 +14,9 @@ import {
   Database,
   AlertTriangle,
   HardDrive,
-  Activity
+  Activity,
+  Mail,
+  Calendar
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -23,6 +25,8 @@ const navigation = [
   { name: 'User Management', href: '/users', icon: Users },
   { name: 'System Analytics', href: '/analytics', icon: BarChart3 },
   { name: 'System Monitoring', href: '/monitoring', icon: Monitor },
+  { name: 'Email Monitoring', href: '/email-monitoring', icon: Mail },
+  { name: 'Meeting Scheduling', href: '/meeting-scheduling', icon: Calendar },
   { name: 'Audit Logs', href: '/audit-logs', icon: Activity },
   { name: 'Bulk Operations', href: '/bulk-operations', icon: Database },
   { name: 'Error Logs', href: '/error-logs', icon: AlertTriangle },

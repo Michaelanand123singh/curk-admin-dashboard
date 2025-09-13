@@ -23,7 +23,7 @@ const requiredVars = [
   {
     name: 'VITE_API_BASE_URL',
     description: 'Backend API base URL',
-    example: 'http://localhost:8000/api/v1'
+    example: 'http://localhost:8080/api/v1'
   }
 ];
 

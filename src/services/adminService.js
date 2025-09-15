@@ -373,6 +373,34 @@ class AdminService {
   async disconnectCalendar() {
     return this.delete('/calendar/disconnect');
   }
+
+  // Contact Management Methods
+  async getContacts(filters = {}) {
+    const queryParams = new URLSearchParams();
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) queryParams.append(key, value);
+    });
+    
+    const queryString = queryParams.toString();
+    const endpoint = queryString ? `/contact/admin/all?${queryString}` : '/contact/admin/all';
+    return this.get(endpoint);
+  }
+
+  async getContactStats() {
+    return this.get('/contact/admin/stats');
+  }
+
+  async getContactDetail(contactId) {
+    return this.get(`/contact/admin/${contactId}`);
+  }
+
+  async updateContact(contactId, updateData) {
+    return this.put(`/contact/admin/${contactId}`, updateData);
+  }
+
+  async deleteContact(contactId) {
+    return this.delete(`/contact/admin/${contactId}`);
+  }
 }
 
 export const adminService = new AdminService();

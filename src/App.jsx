@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import UserManagementPage from './pages/UserManagementPage';
+import ContactManagementPage from './pages/ContactManagementPage';
 import SystemAnalyticsPage from './pages/SystemAnalyticsPage';
 import SystemMonitoringPage from './pages/SystemMonitoringPage';
 import EmailMonitoringPage from './pages/EmailMonitoringPage';
@@ -65,6 +66,13 @@ function App() {
               <ProtectedRoute>
                 <Layout>
                   <UserManagementPage />
+                </Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/contacts" element={
+              <ProtectedRoute>
+                <Layout>
+                  <ContactManagementPage />
                 </Layout>
               </ProtectedRoute>
             } />

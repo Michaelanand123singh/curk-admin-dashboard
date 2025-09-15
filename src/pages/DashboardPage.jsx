@@ -52,6 +52,7 @@ export default function DashboardPage() {
   const [health, setHealth] = useState(null);
   const [emailStats, setEmailStats] = useState(null);
   const [meetingStats, setMeetingStats] = useState(null);
+  const [contactStats, setContactStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -62,16 +63,18 @@ export default function DashboardPage() {
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const [overviewData, healthData, emailStatsData, meetingStatsData] = await Promise.all([
+      const [overviewData, healthData, emailStatsData, meetingStatsData, contactStatsData] = await Promise.all([
         adminService.getSystemOverview(),
         adminService.getSystemHealth(),
         adminService.getEmailStatistics().catch(() => ({ success: false, data: {} })),
-        adminService.getMeetingStatistics().catch(() => ({ success: false, data: {} }))
+        adminService.getMeetingStatistics().catch(() => ({ success: false, data: {} })),
+        adminService.getContactStats().catch(() => ({ success: false, data: {} }))
       ]);
       setOverview(overviewData);
       setHealth(healthData);
       setEmailStats(emailStatsData.success ? emailStatsData.data : {});
       setMeetingStats(meetingStatsData.success ? meetingStatsData.data : {});
+      setContactStats(contactStatsData.success ? contactStatsData.data : {});
     } catch (err) {
       setError(err.message);
     } finally {
@@ -173,6 +176,40 @@ export default function DashboardPage() {
           subtitle="Email to meeting"
         />
       </div>
+
+      {/* Contact Stats Grid */}
+      {contactStats && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StatCard
+            title="Total Contacts"
+            value={contactStats?.total_contacts || 0}
+            icon={Users}
+            color="primary"
+            subtitle="All time"
+          />
+          <StatCard
+            title="New Contacts"
+            value={contactStats?.new_contacts || 0}
+            icon={Clock}
+            color="blue"
+            subtitle="Awaiting response"
+          />
+          <StatCard
+            title="In Progress"
+            value={contactStats?.in_progress_contacts || 0}
+            icon={AlertCircle}
+            color="yellow"
+            subtitle="Being handled"
+          />
+          <StatCard
+            title="Resolved"
+            value={contactStats?.resolved_contacts || 0}
+            icon={CheckCircle}
+            color="green"
+            subtitle="Successfully closed"
+          />
+        </div>
+      )}
 
       {/* Detailed Stats */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

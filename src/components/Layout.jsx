@@ -16,13 +16,15 @@ import {
   HardDrive,
   Activity,
   Mail,
-  Calendar
+  Calendar,
+  MessageSquare
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
   { name: 'User Management', href: '/users', icon: Users },
+  { name: 'Contact Management', href: '/contacts', icon: MessageSquare },
   { name: 'System Analytics', href: '/analytics', icon: BarChart3 },
   { name: 'System Monitoring', href: '/monitoring', icon: Monitor },
   { name: 'Email Monitoring', href: '/email-monitoring', icon: Mail },

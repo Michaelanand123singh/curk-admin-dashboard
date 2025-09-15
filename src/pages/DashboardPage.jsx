@@ -4,6 +4,7 @@ import {
   BarChart3, 
   Activity, 
   AlertTriangle,
+  AlertCircle,
   TrendingUp,
   Clock,
   CheckCircle,

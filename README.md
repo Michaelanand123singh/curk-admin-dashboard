@@ -20,7 +20,7 @@ A comprehensive admin dashboard for managing the website analyzer system, built 
 
 - Node.js 18+ 
 - npm or yarn
-- Backend API running on `http://localhost:8000`
+- Backend API running on `http://localhost:8080`
 
 ### Local Development
 
@@ -32,7 +32,7 @@ npm install
 cp env.example .env
 
 # Edit .env file and set your API base URL
-# VITE_API_BASE_URL=http://localhost:8000/api/v1
+# VITE_API_BASE_URL=http://localhost:8080/api/v1
 
 # Validate environment configuration
 npm run validate-env
@@ -103,7 +103,7 @@ The application uses a multi-stage Docker build for optimal production deploymen
 docker build -t admin-dashboard .
 
 # Run locally
-docker run -p 8000:8000 admin-dashboard
+docker run -p 8080:8080 admin-dashboard
 ```
 
 ## 🔧 Troubleshooting
@@ -139,10 +139,10 @@ If you're getting "VITE_API_BASE_URL environment variable is not set" errors:
 The admin dashboard requires the backend API URL to be configured via environment variables:
 
 **Required Environment Variable:**
-- `VITE_API_BASE_URL` - The base URL of your backend API (e.g., `http://localhost:8000/api/v1`)
+- `VITE_API_BASE_URL` - The base URL of your backend API (e.g., `http://localhost:8080/api/v1`)
 
 **Example Configurations:**
-- **Local Development**: `VITE_API_BASE_URL=http://localhost:8000/api/v1`
+- **Local Development**: `VITE_API_BASE_URL=http://localhost:8080/api/v1`
 - **Production**: `VITE_API_BASE_URL=https://api.curk.in/api/v1`
 - **Staging**: `VITE_API_BASE_URL=https://staging-api.curk.in/api/v1`
 
@@ -169,7 +169,7 @@ To enable API key authentication:
 **Environment Variables:**
 ```bash
 # API Configuration (REQUIRED)
-VITE_API_BASE_URL=http://localhost:8000/api/v1
+VITE_API_BASE_URL=http://localhost:8080/api/v1
 
 # Authentication Configuration (OPTIONAL)
 VITE_USE_API_KEY=false  # Set to 'true' to use API key auth
